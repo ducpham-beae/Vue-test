@@ -9,9 +9,9 @@
     </div>
     <div class="col-span-4 flex flex-col gap-4">
       <img src="https://via.placeholder.com/600" alt="Product Image"
-        class="w-auto aspect-[4/3] object-cover rounded-md" />
-      <div class="relative shadow-lg">
-        <button @click="addToCartHandler" class="bg-green-500 text-white py-2 px-4 rounded-md w-full  ease-linear duration-300">
+        class="w-auto aspect-[4/3] object-cover rounded-md shadow-lg" />
+      <div class="relative">
+        <button @click="addToCartHandler" class="bg-green-500 text-white py-2 px-4 rounded-md w-full shadow-lg ease-linear duration-300">
           Add
         </button>
         <form action="" class="flex flex-row flex-wrap gap-2 ease-linear duration-300 absolute top-0 left-0 w-full opacity-0 pointer-events-none">
@@ -37,6 +37,7 @@ export default {
 
     const addToCartHandler = () => {
       emit("add-to-cart", props.product);
+
     };
 
     return {

@@ -10,13 +10,6 @@
         <p class="text-xl font-bold text-blue-600 mb-4">${{ product.price }}</p>
       </div>
     </div>
-
-    <!-- <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl font-bold">{{ product.name }}</h2>
-      <p class="text-gray-700">{{ product.description }}</p>
-      <p class="text-xl font-semibold text-blue-600">${{ product.price }}</p>
-      <button @click="closeDetail" class="mt-4 text-red-500">Close</button>
-    </div> -->
   </div>
 </template>
 

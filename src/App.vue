@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen grid grid-cols-12 gap-4 rounded-lg bg-gray-100 container m-auto">
+  <div class="min-h-screen grid grid-cols-12 gap-4 p-4 rounded-lg bg-gray-100 container m-auto">
     <ProductList @add-to-cart="handleAddToCart" />
     <Cart :cart="cart" />
   </div>
@@ -25,6 +25,7 @@ export default {
       } else {
         cart.value.push({ ...product, quantity: 1 });
       }
+      console.log(cart)
     };
 
     return {
