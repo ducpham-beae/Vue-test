@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, computed } from "vue";
 import productData from '@/products.json';
 import ProductList from "./components/ProductList.vue";
 import ProductDetail from "./components/ProductDetail.vue";
@@ -48,12 +48,20 @@ const state = reactive({
   clear: () => {
     state.cart = []
   },
-  total: () => {
-    return state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  },
-  count: () => {
-    return `${state.cart.length}/${state.products.length} Added`
-  }
+  // total: () => {
+  //   return state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  // },
+  // count: () => {
+  //   return `${state.cart.length}/${state.products.length} Added`
+  // }
+});
+
+const total = computed(() => {
+  return state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+});
+
+const count = computed(() => {
+  return `${state.cart.length}/${state.products.length} Added`;
 });
 </script>
 
@@ -61,6 +69,6 @@ const state = reactive({
   <div class="min-h-screen grid grid-cols-12  gap-4 p-4 rounded-lg bg-gray-50 container m-auto">
     <ProductDetail :product="state.selectedProduct" v-if="state.selectedProduct" />
     <ProductList :products="state.products" :state="state" />
-    <Cart :cart="state.cart" :total="state.total()" :update="state.updateQuantity" :clear="state.clear" :count="state.count()"/>
+    <Cart :cart="state.cart" :total="total" :update="state.updateQuantity" :clear="state.clear" :count="count"/>
   </div>
 </template>
