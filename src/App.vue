@@ -45,8 +45,14 @@ const state = reactive({
     }
     state.updateQuantity(id, input.value)
   },
+  clear: () => {
+    state.cart = []
+  },
   total: () => {
     return state.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  },
+  count: () => {
+    return `${state.cart.length}/${state.products.length} Added`
   }
 });
 </script>
@@ -55,6 +61,6 @@ const state = reactive({
   <div class="min-h-screen grid grid-cols-12  gap-4 p-4 rounded-lg bg-gray-50 container m-auto">
     <ProductDetail :product="state.selectedProduct" v-if="state.selectedProduct" />
     <ProductList :products="state.products" :state="state" />
-    <Cart :cart="state.cart" :total="state.total()" :update="state.updateQuantity"/>
+    <Cart :cart="state.cart" :total="state.total()" :update="state.updateQuantity" :clear="state.clear" :count="state.count()"/>
   </div>
 </template>
