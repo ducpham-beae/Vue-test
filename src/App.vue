@@ -10,9 +10,9 @@ const state = reactive({
   cart: [],
   selectedProduct: productData[0],
 
-  findInCart: (id) => {
-    return state.cart.find(item => item.id === id);
-  },
+  // findInCart: (id) => {
+  //   return state.cart.find(item => item.id === id);
+  // },
   findIndexInCart: (id) => {
     return state.cart.findIndex(item => item.id === id)
   },
@@ -28,6 +28,10 @@ const state = reactive({
     state.selectedProduct = product
   },
   updateQuantity: (id, quantity) => {
+    if (Number.isNaN(quantity)) {
+      quantity = 0;
+      //return;
+    }
     const existingPosition = state.findIndexInCart(id);
     if(quantity <= 0 && existingPosition > -1){
       state.cart.splice(state.findIndexInCart(id), 1);
