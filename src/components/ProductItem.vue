@@ -1,53 +1,37 @@
+<script setup>
+import { defineProps, ref } from 'vue';
+
+const props = defineProps({
+  product: Object,
+  state: Object,
+  isAdd: Boolean
+});
+</script>
 <template>
-  <div class="grid grid-cols-12 gap-4 border p-4 rounded-lg shadow-sm bg-white">
+  <div class="grid grid-cols-12 gap-4 border-t p-4">
     <div class="col-span-8">
-      <h3 class="text-lg font-semibold">{{ product.name }}</h3>
+      <h3 class="text-xl font-semibold">{{ product.name }}</h3>
       <!-- <p class="text-gray-500 mb-4">{{ product.description }}</p> -->
-      <p class="text-xl font-bold text-blue-600 mb-4">${{ product.price }}</p>
-      <button @click="showDetail" class="bg-blue-500 text-white py-2 px-4 rounded-full shadow-lg">Show Detail</button>
+      <p class="text-md text-black mb-3">${{ product.price }}</p>
+      <button @click="props.state.showDetail(product)" class="text-blue-500">Show Detail</button>
 
     </div>
     <div class="col-span-4 flex flex-col gap-4">
       <img src="https://via.placeholder.com/600" alt="Product Image"
-        class="w-auto aspect-[4/3] object-cover rounded-md shadow-lg" />
+        class="w-auto aspect-[4/3] object-cover rounded-md shadow" />
       <div class="relative">
-        <button @click="addToCartHandler" class="bg-green-500 text-white py-2 px-4 rounded-md w-full shadow-lg ease-linear duration-300">
+        <button v-if="!isAdd" @click="props.state.addToCart(product)" :data-id="product.id"
+          class="font-bold uppercase text-green-500 py-2 px-4 rounded w-full shadow-lg ease-linear duration-300">
           Add
         </button>
-        <form action="" class="flex flex-row flex-wrap gap-2 ease-linear duration-300 absolute top-0 left-0 w-full opacity-0 pointer-events-none">
-          <button type="button" class="w-[40px] h-[40px] shadow-sm mr-auto border rounded-md">-</button>
-          <input type="text" class="flex-grow max-w-10 border rounded-md text-center" value="1">
-          <button type="button" class="w-[40px] h-[40px] shadow-sm ml-auto border rounded-md">+</button>
+
+        <form v-else @submit.prevent action=""
+          class="flex flex-row flex-wrap gap-2 ease-linear duration-300">
+          <button type="button" class="w-[40px] h-[40px] shadow-sm mr-auto border rounded minus" @click="(props.state.changeQuantity(product.id, $event))">-</button>
+          <input type="text" class="flex-grow max-w-10 border rounded text-center" :value="product.quantity || 1" @keyup.enter="(props.state.updateQuantity(product.id, parseInt($event.target.value)))">
+          <button type="button" class="w-[40px] h-[40px] shadow-sm ml-auto border rounded plus" @click="(props.state.changeQuantity(product.id, $event))">+</button>
         </form>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    product: Object,
-  },
-  emits: ["show-detail", "add-to-cart"],
-  setup(props, { emit }) {
-    const showDetail = () => {
-      emit("show-detail", props.product);
-    };
-
-    const addToCartHandler = () => {
-      emit("add-to-cart", props.product);
-
-    };
-
-    return {
-      showDetail,
-      addToCartHandler,
-    };
-  },
-};
-</script>
-
-<style scoped>
-/* Style for individual product item */
-</style>
